@@ -1,0 +1,46 @@
+<html>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="gradientchart.js"></script>    
+
+    <style>
+
+body {
+  margin: auto;
+  width: 960px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+}
+
+.area {
+  //fill: url(#temperature-gradient);
+  stroke-width: 05px;
+  fill: "blue";
+  opacity: 0.1;
+  display: none;
+}
+
+/*.rect {
+  //fill: url(#temperature-gradient);
+  fill: "red";
+  opacity: 0.5
+}*/
+
+</style>
+<body>
+</body>
+<script>
+	drawChart();
+</script> 
+</html>
