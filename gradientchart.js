@@ -19,7 +19,7 @@ function getData(length){
 		data.push({
 			start: startDate,
 			end: endDate,
-			value: getRandomInt(0, 5),
+			value: getRandomInt(0, 15),
 			type: getRandomInt(0,2)
 		});
 	};
@@ -44,8 +44,8 @@ function getOffsetData(data){
 	return pd;
 };
 
-function drawChart(){	
-	var data = getData(30);
+function drawD3Chart(){	
+	var data = getData(40);
 
 	// var temp = [];
 
@@ -85,7 +85,7 @@ function drawChart(){
 	x.domain(d3.extent(data, function(d) { return d.start; }));
   	y.domain(d3.extent(data, function(d) { return d.value; }));
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select("#d3-chart").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
