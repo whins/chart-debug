@@ -1,34 +1,5 @@
-function getRandomInt(min, max){
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-};
 
-function randomDate() {
-	var start = new Date("2011.10.01 00:00");
-	var end = new Date("2011.10.01 13:59");
-	var date = new Date(+start + Math.random() * (end - start));
-	date.setHours(getRandomInt(0, 23));
-	return date;
-}
 
-function getData(length){
-	var data = [];
-	for (var i = 0; i < length; i++) {
-		var startDate = randomDate();
-		var endDate = new Date(startDate);
-		var endDate = new Date(endDate.setMinutes(endDate.getMinutes() + getRandomInt(0, 60)));
-		data.push({
-			start: startDate,
-			end: endDate,
-			value: getRandomInt(0, 15),
-			type: getRandomInt(0,2)
-		});
-	};
-	return data.sort(function (a, b) { return (a.start.valueOf() < b.end.valueOf()) ? -1 : (a.start.valueOf() > b.end.valueOf()) ? 1 : 0; });
-}
-
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
 
 function getOffsetData(data){
 	var extent = d3.extent(data, function(d) { return d.d; });
@@ -44,20 +15,8 @@ function getOffsetData(data){
 	return pd;
 };
 
-function drawD3Chart(){	
-	var data = getData(40);
-
-	// var temp = [];
-
-	// data.forEach(function(d) {
-	// 	temp.push({
-	// 		start: startDate,
-	// 		end: endDate,
-	// 		value: getRandomInt(0, 10),
-	// 		type: getRandomInt(0,2)
-	// 	});
-	// });
-
+function drawD3Chart(domElement){	
+	var data = getData(4000);
 
 	var colors = ["green", "orange", "red"];
 
@@ -75,17 +34,17 @@ function drawD3Chart(){
 	    .scale(y)
 	    .orient("left");
 
-	var  area = d3.svg.area().interpolate("step-before")
+	var  area = d3.svg.area().interpolate("linear")
 		.x(function(d) { return x(d.start); })
 		.y0(height)
 		.y1(function(d) { return y(d.value); });
 
-
-
-	x.domain(d3.extent(data, function(d) { return d.start; }));
+	var startExtent = d3.extent(data, function(d) { return d.start; });
+	var endExtent = d3.extent(data, function(d) { return d.end; });
+	x.domain([startExtent[0], endExtent[1]]);
   	y.domain(d3.extent(data, function(d) { return d.value; }));
 
-	var svg = d3.select("#d3-chart").append("svg")
+	var svg = d3.select("#" + domElement).append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -105,10 +64,10 @@ function drawD3Chart(){
 		.attr("dy", ".71em")
 		.style("text-anchor", "end");
 
-	svg.append("path")
-		.datum(data)
-		.attr("class", "area")
-		.attr("d", area);
+	// svg.append("path")
+	// 	.datum(data)
+	// 	.attr("class", "area")
+	// 	.attr("d", area);
 
 	svg.selectAll("rect")
 		.data(data)

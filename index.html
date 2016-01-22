@@ -1,14 +1,15 @@
 <html>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>    
-<script src="gradientchart.js"></script>        
+<script src="dataHelper.js"></script>        
+<script src="d3-chart.js"></script>        
 <script src="canvas-chart.js"></script>    
 
     <style>
 
-body {
+/*body {
   margin: auto;
-  width: 960px;
-}
+  width: 600px;
+}*/
 
 text {
   font: 10px sans-serif;
@@ -40,11 +41,168 @@ text {
 </style>
 <body>
     <div id="d3-chart"></div>
-    <br>
     <div id="canvas-chart"></div>
 </body>
 <script>
-	drawD3Chart();
-    // drawCanvasChart();
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  drawCanvasChart("canvas-chart");
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
 </script> 
 </html>

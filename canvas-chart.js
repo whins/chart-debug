@@ -1,7 +1,24 @@
+function createCanvas(divName) {      
+	var div = document.getElementById(divName);
+	div.appendChild(document.createElement('hr'));
+	var canvas = document.createElement('canvas');
+	div.appendChild(canvas);
+	if (typeof G_vmlCanvasManager != 'undefined') {
+		canvas = G_vmlCanvasManager.initElement(canvas);
+	} 
+	var ctx = canvas.getContext("2d");
+	return ctx;
+}
+
+function drawCanvasChart(domElement){
+	var ctx = createCanvas(domElement);
+	var chart = new BarGraph(ctx);
+	var data = getData(4000);
+	chart.draw(data);
+}
+
 function BarGraph(ctx) {
-
 	// Private properties and methods
-
 	var self = this;
 	var startArr;
 	var endArr;
@@ -11,20 +28,37 @@ function BarGraph(ctx) {
 	var domains = [];
 	var rangeMin = 0;
 	var rangeMax =  1;
+	var colors = ["green", "orange", "red"];
+	var step = 0;
+
+	self.context = ctx;
+	self.data = [];
+	self.width = width;
+	self.height = height;	
+	self.maxValue;
+	self.margin = 5;
+	self.colors = ["purple", "red", "green", "yellow"];
+	self.curArr = [];
+	self.backgroundColor = "#fff";
+	self.xAxisLabelArr = [];
+	self.yAxisLabelArr = [];
+	self.animationInterval = 100;
+	self.animationSteps = 10;
 
 	self.domain = function(domainValues){
 		if (domainValues == null) {
 			return;
 		};
-		if (domainValues.length == 2) {
-			self.domainMin = domainValues[0];
-			self.domainMax = domainValues[1];
-		} else {
-			self.domains = domainValues;
-		}
+		self.domainMin = domainValues[0];
+		self.domainMax = domainValues[1];
+
+		updateStep();
 	}
 		
-  // Loop method adjusts the height of bar and redraws if neccessary
+	function updateStep(){
+		step = self.context.canvas.width / (self.domainMax.valueOf() - self.domainMin.valueOf());
+	}
+	// Loop method adjusts the height of bar and redraws if neccessary
 	var loop = function () {
 
 	  var delta;
@@ -53,135 +87,49 @@ function BarGraph(ctx) {
 	  }
 	};
 		
-  // Draw method updates the canvas with the current display
-	var draw = function (arr) {
-							
-	  var numOfBars = arr.length;
-	  var barWidth;
-	  var barHeight;
-	  var border = 0;
-	  var ratio;
-	  var maxBarHeight;
-	  var gradient;
-	  var largestValue;
-	  var graphAreaX = 0;
-	  var graphAreaY = 0;
-	  var graphAreaWidth = self.width;
-	  var graphAreaHeight = self.height;
-	  var i;
-	  
+	// Draw method updates the canvas with the current display
+	self.draw = function (data) {		
+		self.data = data;				
+		var startExtent = d3.extent(data, function(d) { return d.start; });
+		var endExtent = d3.extent(data, function(d) { return d.end; });	
+		self.domain([startExtent[0], endExtent[1]]);
+
+		var graphAreaX = 0;
+		var graphAreaY = 0;
+		var graphAreaWidth = self.width;
+		var graphAreaHeight = self.height;
+		var i;
+  
 		// Update the dimensions of the canvas only if they have changed
-	  if (ctx.canvas.width !== self.width || ctx.canvas.height !== self.height) {
-		ctx.canvas.width = self.width;
-		ctx.canvas.height = self.height;
-	  }
-				
-	  // Draw the background color
-	  ctx.fillStyle = self.backgroundColor;
-	  ctx.fillRect(0, 0, self.width, self.height);
-					
-	  // If x axis labels exist then make room	
-	  if (self.xAxisLabelArr.length) {
-		graphAreaHeight -= 40;
-	  }
-				
-	  // Calculate dimensions of the bar
-	  barWidth = graphAreaWidth / numOfBars - self.margin * 2;
-	  maxBarHeight = graphAreaHeight - 25;
-				
-	  // Determine the largest value in the bar array
-	  var largestValue = 0;
-	  for (i = 0; i < arr.length; i += 1) {
-		if (arr[i] > largestValue) {
-		  largestValue = arr[i];	
+		if (ctx.canvas.width !== self.width || ctx.canvas.height !== self.height) {
+			ctx.canvas.width = self.width;
+			ctx.canvas.height = self.height;
+			updateStep();
 		}
-	  }
-	  
-	  // For each bar
-	  for (i = 0; i < arr.length; i += 1) {
-		// Set the ratio of current bar compared to the maximum
-		if (self.maxValue) {
-		  ratio = arr[i] / self.maxValue;
-		} else {
-		  ratio = arr[i] / largestValue;
-		}
-		
-		barHeight = ratio * maxBarHeight;
-	  
-		// Turn on shadow
-		ctx.shadowOffsetX = 2;
-		ctx.shadowOffsetY = 2;
-		ctx.shadowBlur = 2;
-		ctx.shadowColor = "#999";
-						
-		// Draw bar background
-		ctx.fillStyle = "#333";			
-		ctx.fillRect(self.margin + i * self.width / numOfBars,
-		  graphAreaHeight - barHeight,
-		  barWidth,
-		  barHeight);
-			
-		// Turn off shadow
-		ctx.shadowOffsetX = 0;
-		ctx.shadowOffsetY = 0;
-		ctx.shadowBlur = 0;
 
-		// Draw bar color if it is large enough to be visible
-		if (barHeight > border * 2) {
-			// Create gradient
+		// For each bar
+		for (i = 0; i < data.length; i++) {
+			var barX = (data[i].start.valueOf() - self.domainMin) * step;
+			var barWidth = (data[i].end.valueOf() - data[i].start.valueOf()) * step;
+			var barHeight = (data[i].value * 10);
+			var barY = graphAreaHeight - barHeight;
 			gradient = ctx.createLinearGradient(0, 0, 0, graphAreaHeight);
-			gradient.addColorStop(1-ratio, self.colors[i % self.colors.length]);
-			gradient.addColorStop(1, "#ffffff");
-
+			gradient.addColorStop(1, colors[data[i].type]);
 			ctx.fillStyle = gradient;
-			// Fill rectangle with gradient
-			ctx.fillRect(self.margin + i * self.width / numOfBars + border,
-			  graphAreaHeight - barHeight + border,
-			  barWidth - border * 2,
-			  barHeight - border * 2);
-		}
-
-		// Write bar value
-		ctx.fillStyle = "#333";
-		ctx.font = "bold 12px sans-serif";
-		ctx.textAlign = "center";
-		// Use try / catch to stop IE 8 from going to error town
-		try {
-		  ctx.fillText(parseInt(arr[i],10),
-			i * self.width / numOfBars + (self.width / numOfBars) / 2,
-			graphAreaHeight - barHeight - 10);
-		} catch (ex) {}
-		// Draw bar label if it exists
-		if (self.xAxisLabelArr[i]) {					
-		  // Use try / catch to stop IE 8 from going to error town				
-		  ctx.fillStyle = "#333";
-		  ctx.font = "bold 12px sans-serif";
-		  ctx.textAlign = "center";
-		  try{
-			ctx.fillText(self.xAxisLabelArr[i],
-			  i * self.width / numOfBars + (self.width / numOfBars) / 2,
-			  self.height - 10);
-			} catch (ex) {}
-		  }
-		}
-	  };
+			ctx.fillRect(barX, barY, barWidth, barHeight);
+		};
+	};
 
   // Public properties and methods
+
+	self.reDraw = function() {
+		// body...
+	}
+
 	
-  this.width = 300;
-  this.height = 150;	
-  this.maxValue;
-  this.margin = 5;
-  this.colors = ["purple", "red", "green", "yellow"];
-  this.curArr = [];
-  this.backgroundColor = "#fff";
-  this.xAxisLabelArr = [];
-  this.yAxisLabelArr = [];
-  this.animationInterval = 100;
-  this.animationSteps = 10;
 	
   // Update method sets the end bar array and starts the animation
-	this.update = function (newArr) {
+	self.update = function (newArr) {
 
 	  // If length of target and current array is different 
 	  if (self.curArr.length !== newArr.length) {
