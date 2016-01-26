@@ -1,48 +1,14 @@
-function createCanvas(divName) {      
-	var div = document.getElementById(divName);
-	div.appendChild(document.createElement('hr'));
-	var canvas = document.createElement('canvas');
-	div.appendChild(canvas);
-	if (typeof G_vmlCanvasManager != 'undefined') {
-		canvas = G_vmlCanvasManager.initElement(canvas);
-	} 
-	var ctx = canvas.getContext("2d");
-	return ctx;
-}
-
 function drawCanvasChart(domElement){
-
-	var data = getData(100);
+	var de = document.getElementById(domElement);
+	var data = getData(de.width);
 	var chart = new BarChart();
-	chart.init({id: domElement, data: data});
-	chart.render(300, 100);
-
-
-	// //Create a stage by getting a reference to the canvas
- //    var stage = new createjs.Stage(domElement);
- //    stage.width = 300;
- //    stage.height = 150;
- //    //Create a Shape DisplayObject.
- //    var chartShape = new createjs.Shape();
- //    chartShape.width = stage.width;
- //    chartShape.height = stage.height;
- //    chartShape.graphics.beginFill("#507B8F").drawRect(0, 0, chartShape.width, chartShape.height);
- //    chartShape.x = chartShape.y = 0;
- //    stage.addChild(chartShape);
-
- //    var barShape = new createjs.Shape();
- //    barShape.width = stage.width;
- //    barShape.height = stage.height;
- //    var g = barShape.graphics;
-
-    
-
- //    stage.update();    
+	chart.init({id: domElement, data: data});	
+	chart.render();
 
 }
 
 function BarChart() {
-	// Private properties and methods
+
 	var self = this;
     self.Name = '';
     self.Id = '';
@@ -50,13 +16,16 @@ function BarChart() {
     self.height = 0;
     self.STAGE = null;
     self.data = null;
+	self.colors = ["green", "orange", "red", "#CCCCCC"];
 
-	var colors = ["green", "orange", "red"];
 	var step = 0;
 	var outerShape = null;
     var chartShape = null;
     var backgroundCommands = [];
-    var backgroundColor = "#FF00FF"
+    var backgroundColor = "#F5F5F5"
+    var rect = null;
+	var duration = 1000;
+    var bars = [];
 
 	self.init = function(d){
         if (!d) { 
@@ -69,48 +38,108 @@ function BarChart() {
 		}		
 	};
 
-	self.render = function (w, h) {
+	self.render = function () {
 		self.STAGE = new createjs.Stage(self.Id);
-		self.STAGE.width = self.width = w;
-		self.STAGE.height = self.height = h;
-        self.drawChart(self.STAGE, w, h);
+		self.width = self.STAGE.canvas.width;
+		self.height = self.STAGE.canvas.height;
+        self.drawChart(self.STAGE);
         return self.STAGE;
     };
 
-    self.drawChart = function(group){
+    self.drawChart = function(stage){
     	outerShape = new createjs.Shape();
     	var g = outerShape.graphics;
     	backgroundCommands.push(g.beginFill(backgroundColor).command);
-    	g.drawRect(Math.round(0, 0, self.width, self.height));
-        g.endFill();
-        group.addChild(outerShape);
+		g.drawRect(0, 0, self.width, self.height);
+		g.endFill();
+        stage.addChild(outerShape);
 
-		outerShape.addEventListener("click", function (evt) {
-			if (self.mouseClick){
-				self.mouseClick(evt);
-			}
-		});
-		outerShape.addEventListener("mousemove", function (evt) {
-			if (self.mouseMove) {
-				self.mouseMove(evt);
-			}
-		});
-		outerShape.addEventListener("mouseout", function (evt) {
-			if (self.mouseOut) {
-				self.mouseOut(evt);
-			}
-		});
-		group.addChild(outerShape);
+		updateMinMax();		
 
-		updateMinMax();
-		chartShape = new createjs.Shape();
-		for (var i = 0; i < self.data.length; i++) {
-			drawRect(chartShape ,self.data[i]);
-		};
-		group.addChild(chartShape);
-		group.update();
+		drawDataBars();							
+		createjs.Ticker.addEventListener("tick", stage);
+		
+		stage.enableMouseOver(10);
     };
 
+	function drawDataBars(){		
+
+		var backShapeData = [];
+
+		var range = {start: null, end: null, type: null};
+
+		for (var i = 0; i < self.data.length; i++) {
+
+			/// data for back shape			
+			if(range.start === null && range.start !== i && range.type !== self.data[i].type){
+				range.start = i;
+				range.type = self.data[i].type;
+			}
+
+			if(!self.data[i + 1] || (range.end === null && range.start !== i && range.type !== self.data[i + 1].type)){
+				range.type = self.data[i].type;
+				backShapeData.push({start: range.start, end: i, type: self.data[i].type});
+				range.start = null;
+				range.end = null;
+			}
+			// end data for back shape
+
+			// var x = Math.floor((self.data[i].start.valueOf() - self.X.min.valueOf()) * self.X.step);
+			var h =	Math.floor(self.data[i].value * self.Y.step);
+			// var w =	Math.floor((self.data[i].end.valueOf() - self.data[i].start.valueOf()) * self.X.step);
+			var y = self.height - h;
+			
+			var shapeBar = new createjs.Shape();
+			var g = shapeBar.graphics;
+			shapeBar.x = i;
+			shapeBar.y = y;	
+			shapeBar.data = self.data[i];
+
+			var lineTo = new createjs.Graphics.LineTo(0, h);
+
+			g.setStrokeStyle(2)
+				.beginStroke(self.colors[self.data[i].type])
+				.moveTo(0, h)
+				.append(lineTo)
+				.endStroke();
+
+			createjs.Tween.get(lineTo)
+				.to({ y: 0 }, duration, createjs.Ease.linear );
+			createjs.Tween.get(lineTo)
+				.to({ h: h }, duration, createjs.Ease.linear)			
+				.call(handleComplete);
+			shapeBar.addEventListener("click", onRectClick);
+			shapeBar.addEventListener("mouseover", onRectMousemove);
+			self.STAGE.addChild(shapeBar);
+			// bars.push(shapeBar);
+		};
+		
+		drawBack(backShapeData);
+	};
+
+	function drawBack(data){
+		var backRect = new createjs.Shape();
+		backRect.alpha = 0.1;
+		createjs.Ticker.mouseEnabled = false;
+
+		var backLines = new createjs.Shape();
+		backLines.alpha = 0.4;
+		backLines.mouseEnabled = false;
+
+		var gR = backRect.graphics;
+		var gL = backLines.graphics;
+		for (var i = 0; i < data.length; i++) {
+			var x1 = data[i].start;
+			var x2 = data[i].end;
+			var w = x2 - x1;
+			var col = self.colors[data[i].type];
+			gR.beginFill(col).drawRect(x1, 0, w, self.height).endFill();
+			gL.setStrokeStyle(2).beginStroke(col).moveTo(x1, 1).lineTo(x2, 1).endStroke();
+		};
+
+		self.STAGE.addChild(backRect, backLines);
+	}
+	
     function updateMinMax(){
     	if (self.data == null) {
     		return;
@@ -120,70 +149,34 @@ function BarChart() {
     	self.X.min = d3.extent(self.data, function(d) { return d.start; })[0];
 		self.X.max = d3.extent(self.data, function(d) { return d.end; })[1];	
 		var y_xtent = d3.extent(self.data, function(d) { return d.value; });	
-		self.Y.min = y_xtent[0];
+		self.Y.min = 0;
 		self.Y.max = y_xtent[1];
 		updateStep();
     };  
 
 	function updateStep(){
 		self.X.step = self.width / (self.X.max.valueOf() - self.X.min.valueOf());
-		self.Y.step = self.width / (self.Y.max.valueOf() - self.Y.min.valueOf());
+		self.Y.step = self.height / (self.Y.max);
+	}
+	function onRectClick(evt) {
+		var sender = evt.target;
 	}
 
-	function drawRect(shape, data){
-		var x = (data.start.valueOf() - self.X.min) * self.X.step;
-		var h =	data.value * self.Y.step;
-		var w =	(data.end.valueOf() - data.start.valueOf()) * self.X.step;
-		var y = shape.height - h;
-		var colors = ["green", "orange", "red"];
-
-		shape.graphics.beginFill(colors[data.type]).drawRect(x, y, w, h).endFill();
-		// createjs.Tween.get(shape).to({ h: valueLeft }, 100, createjs.Ease.linear);
+	function onRectMousemove(evt) {
+		var sender = evt.target;
+		var value = sender.data.value;
+		var x = sender.x;
+		var y = sender.y;
+		$('#output').html('V: ' + value + '<br>X: ' + x + '<br>Y: ' + y);
 	}
 
+	function handleComplete(evt) {
+		var sender = evt.target;
+	}
     self.setBackgroundColor = function (color) {
         backgroundColor = color;
         for (var i = 0; i < backgroundCommands.length; i++) {
             backgroundCommands[i].style = backgroundColor;
         }
     };
-
-		
-	
-			
-	// Draw method updates the canvas with the current display
-	self.draw = function (data) {		
-		self.data = data;				
-		var startExtent = d3.extent(data, function(d) { return d.start; });
-		var endExtent = d3.extent(data, function(d) { return d.end; });	
-		self.domain([startExtent[0], endExtent[1]]);
-
-		var graphAreaX = 0;
-		var graphAreaY = 0;
-		var graphAreaWidth = self.width;
-		var graphAreaHeight = self.height;
-		var i;
-  
-		// Update the dimensions of the canvas only if they have changed
-		if (ctx.canvas.width !== self.width || ctx.canvas.height !== self.height) {
-			ctx.canvas.width = self.width;
-			ctx.canvas.height = self.height;
-			updateStep();
-		}
-
-		// For each bar
-		for (i = 0; i < data.length; i++) {
-			var barX = (data[i].start.valueOf() - self.domainMin) * step;
-			var barWidth = (data[i].end.valueOf() - data[i].start.valueOf()) * step;
-			var barHeight = (data[i].value * 10);
-			var barY = graphAreaHeight - barHeight;
-			gradient = ctx.createLinearGradient(0, 0, 0, graphAreaHeight);
-			gradient.addColorStop(1, colors[data[i].type]);
-			ctx.fillStyle = gradient;
-			ctx.fillRect(barX, barY, barWidth, barHeight);
-		};
-	};
-
-  // Public properties and methods
-
 }

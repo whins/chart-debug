@@ -16,7 +16,7 @@ function getOffsetData(data){
 };
 
 function drawD3Chart(domElement){	
-	var data = getData(4000);
+	var data = getData(400);
 
 	var colors = ["green", "orange", "red"];
 

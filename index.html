@@ -1,9 +1,10 @@
 <html>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>    
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="jquery-1.12.0.min.js"></script>
 <script src="dataHelper.js"></script>        
 <script src="d3-chart.js"></script>        
-<script src="canvas-chart.js"></script>    
+<script src="canvas-chart.js"></script>
 
     <style>
 
@@ -41,11 +42,12 @@ text {
 
 </style>
 <body>
-    <div id="d3-chart"></div>
-    <canvas id="canvas-chart" width="960" height="400"></canvas>
+    <canvas id="canvas-chart" width="1900" height="100"></canvas><hr>
+    <pre id="output"></pre>
+    <!-- <div id="d3-chart"></div> -->
 </body>
 <script>
   drawCanvasChart("canvas-chart");
-  drawD3Chart("d3-chart");  
+  // drawD3Chart("d3-chart");  
 </script> 
 </html>

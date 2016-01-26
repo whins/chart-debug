@@ -11,21 +11,45 @@ function randomDate() {
 	var end = new Date("2011.10.01 13:59");
 	var date = new Date(+start + Math.random() * (end - start));
 	date.setHours(getRandomInt(0, 23));
+	date.setMinutes(getRandomInt(0, 35));
 	return date;
 }
 
 function getData(length){
 	var data = [];
-	for (var i = 0; i < length; i++) {
-		var startDate = randomDate();
-		var endDate = new Date(startDate);
-		var endDate = new Date(endDate.setMinutes(endDate.getMinutes() + getRandomInt(0, 60)));
-		data.push({
-			start: startDate,
-			end: endDate,
-			value: getRandomInt(0, 15),
-			type: getRandomInt(0,2)
-		});
-	};
+	do{
+		var type = getRandomInt(0, 3);
+		var segmentLen = getRandomInt(40, 70);
+		for (var j = 0; j < segmentLen; j++) {
+			if(data.length == length){
+				break;
+			}
+			var startDate = randomDate();
+			var endDate = new Date(startDate);
+			var endDate = new Date(endDate.setMinutes(endDate.getMinutes() + getRandomInt(5, 20)));
+			var val = getRandomInt(0, 50); //data.length % 2; 
+			data.push({
+				start: startDate,
+				end: endDate,
+				value: val,
+				type: type
+			});
+		};
+	} while (data.length < length);
+
+
+	
+	// for (var i = 0; i < length; i++) {
+	// 	var startDate = randomDate();
+	// 	var endDate = new Date(startDate);
+	// 	var endDate = new Date(endDate.setMinutes(endDate.getMinutes() + getRandomInt(5, 20)));
+	// 	data.push({
+	// 		start: startDate,
+	// 		end: endDate,
+	// 		value: getRandomInt(0, 50),
+	// 		type: getRandomInt(0,3)
+	// 	});
+	// };
+	return data;
 	return data.sort(function (a, b) { return (a.start.valueOf() < b.end.valueOf()) ? -1 : (a.start.valueOf() > b.end.valueOf()) ? 1 : 0; });
 }
