@@ -69,8 +69,8 @@ function BarChart() {
 
 
 	function drawDataBars(from){
-		// self.STAGE.clear();
 		var shape = new createjs.Shape();
+		shape.alpha = 0.5;
 		var g = shape.graphics;
 		var backShapeData = [];
 		var range = {start: null, end: null, type: null};
@@ -91,7 +91,6 @@ function BarChart() {
 			}
 			// end data for back shape
 			
-
 			// var x = Math.floor((self.data[i].start.valueOf() - self.X.min.valueOf()) * self.X.step);
 			var h =	Math.floor(self.data[i].value * self.Y.step);
 			// var w =	Math.floor((self.data[i].end.valueOf() - self.data[i].start.valueOf()) * self.X.step);
@@ -113,6 +112,9 @@ function BarChart() {
 			bars.push({x: i, y: y, data: self.data[i]});
 		};
 		self.STAGE.addChild(shape);
+
+		createjs.Tween.get(shape)
+				.to({ alpha: 1 }, duration, createjs.Ease.linear );
 
 		drawBack(backShapeData);
 		createjs.Ticker.addEventListener("tick", self.STAGE);
@@ -185,11 +187,11 @@ function BarChart() {
 
 	function drawBack(data){
 		var backRect = new createjs.Shape();
-		backRect.alpha = 0.1;
+		backRect.alpha = 0;
 		createjs.Ticker.mouseEnabled = false;
 
 		var backLines = new createjs.Shape();
-		backLines.alpha = 0.4;
+		backLines.alpha = 0;
 		backLines.mouseEnabled = false;
 
 		var gR = backRect.graphics;
@@ -204,6 +206,10 @@ function BarChart() {
 		};
 
 		self.STAGE.addChild(backRect, backLines);
+		createjs.Tween.get(backRect)
+				.to({ alpha: 0.1 }, duration, createjs.Ease.linear );
+		createjs.Tween.get(backLines)
+				.to({ alpha: 0.6 }, duration, createjs.Ease.linear );
 	}
 	
     function updateMinMax(){
