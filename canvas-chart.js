@@ -1,9 +1,10 @@
 function drawCanvasChart(domElement){
 	var de = document.getElementById(domElement);
-	var data = getData(de.width);
+	var data = getData(de.width / 2);
 	var chart = new BarChart();
 	chart.init({id: domElement, data: data});	
 	chart.render();
+	return chart;
 
 }
 
@@ -40,8 +41,12 @@ function BarChart() {
 
 	self.render = function () {
 		self.STAGE = new createjs.Stage(self.Id);
+		self.STAGE.autoClear = false;
 		self.width = self.STAGE.canvas.width;
 		self.height = self.STAGE.canvas.height;
+		self.STAGE.canvas.addEventListener('mousemove', function(e){
+			return 1;
+		});
         self.drawChart(self.STAGE);
         return self.STAGE;
     };
@@ -57,18 +62,20 @@ function BarChart() {
 		updateMinMax();		
 
 		drawDataBars();							
-		createjs.Ticker.addEventListener("tick", stage);
 		
+
 		stage.enableMouseOver(10);
     };
 
-	function drawDataBars(){		
 
+	function drawDataBars(from){
+		// self.STAGE.clear();
+		var shape = new createjs.Shape();
+		var g = shape.graphics;
 		var backShapeData = [];
-
 		var range = {start: null, end: null, type: null};
 
-		for (var i = 0; i < self.data.length; i++) {
+		for (var i = from == undefined ? 0: from ; i < self.data.length; i++) {
 
 			/// data for back shape			
 			if(range.start === null && range.start !== i && range.type !== self.data[i].type){
@@ -83,39 +90,98 @@ function BarChart() {
 				range.end = null;
 			}
 			// end data for back shape
+			
 
 			// var x = Math.floor((self.data[i].start.valueOf() - self.X.min.valueOf()) * self.X.step);
 			var h =	Math.floor(self.data[i].value * self.Y.step);
 			// var w =	Math.floor((self.data[i].end.valueOf() - self.data[i].start.valueOf()) * self.X.step);
 			var y = self.height - h;
-			
-			var shapeBar = new createjs.Shape();
-			var g = shapeBar.graphics;
-			shapeBar.x = i;
-			shapeBar.y = y;	
-			shapeBar.data = self.data[i];
 
-			var lineTo = new createjs.Graphics.LineTo(0, h);
+			var lineTo = new createjs.Graphics.LineTo(i + 0.5, self.height);
 
-			g.setStrokeStyle(2)
+			g.setStrokeStyle(1)
 				.beginStroke(self.colors[self.data[i].type])
-				.moveTo(0, h)
+				.moveTo(i + 0.5, self.height)
 				.append(lineTo)
 				.endStroke();
 
 			createjs.Tween.get(lineTo)
-				.to({ y: 0 }, duration, createjs.Ease.linear );
+				.to({ y: y }, duration, createjs.Ease.linear );
 			createjs.Tween.get(lineTo)
 				.to({ h: h }, duration, createjs.Ease.linear)			
 				.call(handleComplete);
-			shapeBar.addEventListener("click", onRectClick);
-			shapeBar.addEventListener("mouseover", onRectMousemove);
-			self.STAGE.addChild(shapeBar);
-			// bars.push(shapeBar);
+			bars.push({x: i, y: y, data: self.data[i]});
 		};
-		
+		self.STAGE.addChild(shape);
+
 		drawBack(backShapeData);
+		createjs.Ticker.addEventListener("tick", self.STAGE);
 	};
+
+
+	self.addPoint = function(){
+		var newPoints = getData(10);
+		var from = self.data.length;
+		for (var i = 0; i < newPoints.length; i++) {
+			self.data.push(newPoints[i]);
+		};
+		drawDataBars(from);
+	}
+
+	// function drawDataBars(){		
+
+	// 	var backShapeData = [];
+
+	// 	var range = {start: null, end: null, type: null};
+
+	// 	for (var i = 0; i < self.data.length; i++) {
+
+	// 		/// data for back shape			
+	// 		if(range.start === null && range.start !== i && range.type !== self.data[i].type){
+	// 			range.start = i;
+	// 			range.type = self.data[i].type;
+	// 		}
+
+	// 		if(!self.data[i + 1] || (range.end === null && range.start !== i && range.type !== self.data[i + 1].type)){
+	// 			range.type = self.data[i].type;
+	// 			backShapeData.push({start: range.start, end: i, type: self.data[i].type});
+	// 			range.start = null;
+	// 			range.end = null;
+	// 		}
+	// 		// end data for back shape
+
+	// 		// var x = Math.floor((self.data[i].start.valueOf() - self.X.min.valueOf()) * self.X.step);
+	// 		var h =	Math.floor(self.data[i].value * self.Y.step);
+	// 		// var w =	Math.floor((self.data[i].end.valueOf() - self.data[i].start.valueOf()) * self.X.step);
+	// 		var y = self.height - h;
+
+	// 		var shapeBar = new createjs.Shape();
+	// 		var g = shapeBar.graphics;
+	// 		shapeBar.x = i + 0.5;
+	// 		shapeBar.y = y;	
+	// 		shapeBar.data = self.data[i];
+
+	// 		var lineTo = new createjs.Graphics.LineTo(0, h);
+
+	// 		g.setStrokeStyle(1)
+	// 			.beginStroke(self.colors[self.data[i].type])
+	// 			.moveTo(0, h)
+	// 			.append(lineTo)
+	// 			.endStroke();
+
+	// 		createjs.Tween.get(lineTo)
+	// 			.to({ y: 0 + 0.5 }, duration, createjs.Ease.linear );
+	// 		createjs.Tween.get(lineTo)
+	// 			.to({ h: h }, duration, createjs.Ease.linear)			
+	// 			.call(handleComplete);
+	// 		shapeBar.addEventListener("click", onRectClick);
+	// 		shapeBar.addEventListener("mouseover", onRectMousemove);
+	// 		self.STAGE.addChild(shapeBar);
+	// 		// bars.push(shapeBar);
+	// 	};
+		
+	// 	drawBack(backShapeData);
+	// };
 
 	function drawBack(data){
 		var backRect = new createjs.Shape();
@@ -130,11 +196,11 @@ function BarChart() {
 		var gL = backLines.graphics;
 		for (var i = 0; i < data.length; i++) {
 			var x1 = data[i].start;
-			var x2 = data[i].end;
+			var x2 = data[i].end + 1;
 			var w = x2 - x1;
 			var col = self.colors[data[i].type];
-			gR.beginFill(col).drawRect(x1, 0, w, self.height).endFill();
-			gL.setStrokeStyle(2).beginStroke(col).moveTo(x1, 1).lineTo(x2, 1).endStroke();
+			gR.beginFill(col).drawRect(x1, 0.5, w, self.height).endFill();
+			gL.setStrokeStyle(1).beginStroke(col).moveTo(x1, 0.5).lineTo(x2, 0.5).endStroke();
 		};
 
 		self.STAGE.addChild(backRect, backLines);
@@ -180,3 +246,4 @@ function BarChart() {
         }
     };
 }
+

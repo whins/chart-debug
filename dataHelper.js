@@ -51,5 +51,9 @@ function getData(length){
 	// 	});
 	// };
 	return data;
-	return data.sort(function (a, b) { return (a.start.valueOf() < b.end.valueOf()) ? -1 : (a.start.valueOf() > b.end.valueOf()) ? 1 : 0; });
+	
 }
+
+function sortData(date){
+	return data.sort(function (a, b) { return (a.start.valueOf() < b.end.valueOf()) ? -1 : (a.start.valueOf() > b.end.valueOf()) ? 1 : 0; });
+};

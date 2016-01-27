@@ -42,12 +42,17 @@ text {
 
 </style>
 <body>
-    <canvas id="canvas-chart" width="1900" height="100"></canvas><hr>
+    <canvas id="canvas-chart" width="300" height="100"></canvas><hr>
     <pre id="output"></pre>
+    <button onclick="addPoint();">Add point</button>
     <!-- <div id="d3-chart"></div> -->
 </body>
 <script>
-  drawCanvasChart("canvas-chart");
+  var s = drawCanvasChart("canvas-chart");
+  function addPoint () {
+    s.addPoint();
+  }
+
   // drawD3Chart("d3-chart");  
 </script> 
 </html>
