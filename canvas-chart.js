@@ -39,6 +39,7 @@ function BarChart() {
 		}		
 	};
 
+
 	self.render = function () {
 		self.STAGE = new createjs.Stage(self.Id);
 		self.STAGE.autoClear = false;
