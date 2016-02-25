@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"va",
+				"valueOf"
+			],
+			[
+				"valu",
+				"valueOf"
+			],
+			[
+				"curre",
+				"currentDay"
+			],
+			[
+				"sta",
+				"stack"
+			],
+			[
+				"ap",
+				"alpha"
+			],
+			[
+				"sha",
+				"shape"
+			],
+			[
 				"on",
 				"onclick	Attr"
 			],
@@ -14,10 +38,6 @@
 			[
 				"li",
 				"lineWidth"
-			],
-			[
-				"sha",
-				"shapeBar"
 			],
 			[
 				"line",
@@ -44,20 +64,12 @@
 				"backShapeData"
 			],
 			[
-				"sta",
-				"startPoint"
-			],
-			[
 				"star",
 				"start"
 			],
 			[
 				"start",
 				"startPoint"
-			],
-			[
-				"va",
-				"var"
 			],
 			[
 				"get",
@@ -134,10 +146,6 @@
 			[
 				"bar",
 				"barY"
-			],
-			[
-				"valu",
-				"valueOf"
 			],
 			[
 				"upda",
@@ -234,10 +242,6 @@
 			[
 				"cu",
 				"currentSelections"
-			],
-			[
-				"curre",
-				"currentEditControl"
 			],
 			[
 				"ho",
@@ -510,23 +514,11 @@
 			[
 				"x",
 				"xAxis"
-			],
-			[
-				"clu",
-				"column"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "canvas-chart.js",
-			"settings":
-			{
-				"buffer_size": 6974,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -536,9 +528,17 @@
 	"command_palette":
 	{
 		"height": 392.0,
-		"last_filter": "pa",
+		"last_filter": "git c",
 		"selected_items":
 		[
+			[
+				"git c",
+				"Git: Commit"
+			],
+			[
+				"git a",
+				"Git: Add All"
+			],
 			[
 				"pa",
 				"Package Control: Install Package"
@@ -546,10 +546,6 @@
 			[
 				"git ",
 				"Git: Commit"
-			],
-			[
-				"git a",
-				"Git: Add All"
 			],
 			[
 				"GI",
@@ -613,16 +609,20 @@
 	],
 	"file_history":
 	[
-		"/C/Users/Pavlo/Desktop/gradientchart/canvas-chart.sublime-project",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/js/charts/d3Charts/D3RangeChart.js",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/js/viewmodels/siteanalysis/siteanalysis.js",
-		"/C/Users/Pavlo/Desktop/gradientchart/dataHelper.js",
+		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/pages/portfolioanalysis/portfolioanalysis.html",
+		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/pages/siteanalysis/siteanalysis.html",
+		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/pages/portfolioanalysis/selectionMenu.html",
+		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/pages/siteanalysis/selectionMenu.html",
 		"/C/Users/Pavlo/Desktop/gradientchart/index.html",
 		"/C/Users/Pavlo/Desktop/gradientchart/canvas-chart.js",
+		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/js/layoutcontrols/horizontalTabMenu.js",
+		"/C/Users/Pavlo/Desktop/gradientchart/canvas-chart.sublime-project",
+		"/C/Users/Pavlo/Desktop/gradientchart/dataHelper.js",
 		"/C/Users/Pavlo/Desktop/gradientchart/canvasChart.gif",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicetemplates/whitelabel-default/flowrate/editable.js",
 		"/C/Users/Pavlo/Desktop/gradientchart/d3-chart.js",
-		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/pages/siteanalysis/selectionMenu.html",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/SwitchHTML5/SwitchHTML5/css/pages/P-S-analysis-common.css",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicetemplates/whitelabel-default/ph/editable.js",
 		"/C/Users/Pavlo/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicetemplates/whitelabel-default/ph/readonly.js",
@@ -736,11 +736,7 @@
 		"/C/Users/Admin/Desktop/Нова папка (2)/css/normalize.css",
 		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/CabelTech/SocketServerService/SocketServerService/MainService.cs",
 		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/pages/selectionMenu.html",
-		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/AlertsD/SwitchHTML5/pages/layoutcontrols/horizontalTabMenu.html",
-		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/selectionMenu.js",
-		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicedrawobjects/tile.js",
-		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicetemplates/whitelabel-default/flowrate2/editable.js",
-		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/HubControls/HubControlManager/js/viewmodels/devicetemplates/whitelabel-default/illuminance/readonly.js"
+		"/C/Users/Admin/Documents/Visual Studio 2015/Projects/AlertsD/SwitchHTML5/pages/layoutcontrols/horizontalTabMenu.html"
 	],
 	"find":
 	{
@@ -759,6 +755,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"self.allowInterpolate",
+			"calculateCompareRange",
+			"var val = linearInterpolation(dt, seriesArr[i].serie.data[j].dt.valueOf(), seriesArr[i].serie.d",
+			"as-menu-connector-line",
+			"as-menu-connector-line radius",
+			"settings-tabs",
+			"menu-container",
+			"sa-selection-settings-container",
+			"as-menu-header-indecator-l0",
 			"self.focus",
 			"backShape",
 			"backShapeData",
@@ -877,16 +882,7 @@
 			"calculateCompareRange",
 			"2 Weeks",
 			"customCompareApplay",
-			"\"m\"",
-			"2 Weeks",
-			"settingChanged",
-			"previousCompareApplay",
-			"selectedOption",
-			"previousCompareApplay",
-			"XAxis(",
-			"addxax",
-			"getDateWith",
-			"mousemove("
+			"\"m\""
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -923,100 +919,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "canvas-chart.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6974,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5802,
-								5802
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"bs_sintax": "javascript",
-							"buffer_scroll_name": "2f41254a",
-							"spell_check": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2659.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		},
 		{
@@ -1053,7 +957,7 @@
 		"cols":
 		[
 			0.0,
-			0.70324819691,
+			0.665526069627,
 			1.0
 		],
 		"rows":
@@ -1121,7 +1025,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 466.0,
+	"side_bar_width": 330.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
