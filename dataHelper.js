@@ -50,10 +50,29 @@ function getData(length){
 	// 		type: getRandomInt(0,3)
 	// 	});
 	// };
-	return data;
-	
+	return data;	
 }
 
-function sortData(date){
+function getSquareData(count){
+    var data = [];
+    var i = 1;
+    var sum = 0;
+    while (sum < 100  && i < count) {
+        var a = getRandomInt(10, 30);
+        data.push(a * 10);
+        i++;        
+        sum += a;
+    } 
+    if(100 != sum){
+        data.push((100 - sum) * 10);
+    }
+    return sortData2(data);
+}
+
+function sortData(data){
 	return data.sort(function (a, b) { return (a.start.valueOf() < b.end.valueOf()) ? -1 : (a.start.valueOf() > b.end.valueOf()) ? 1 : 0; });
+};
+
+function sortData2(data){
+	return data.sort(function (a, b) { return (a < b) ? 1 : (a > b) ? -1 : 0; });
 };

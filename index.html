@@ -5,6 +5,7 @@
 <script src="dataHelper.js"></script>        
 <script src="d3-chart.js"></script>        
 <script src="canvas-chart.js"></script>
+<script src="square-chart.js"></script>
 
     <style>
 
@@ -46,12 +47,15 @@ text {
     <pre id="output"></pre>
     <button onclick="addPoint();">Add point</button>
     <!-- <div id="d3-chart"></div> -->
+    <hr>
+    <canvas id="square-chart" width="600" height="600"></canvas>
 </body>
 <script>
-  var s = drawCanvasChart("canvas-chart");
-  function addPoint () {
-    s.addPoint();
-  }
+    var s = drawCanvasChart("canvas-chart");
+    function addPoint () {
+        s.addPoint();
+    }
+    var q = drawSquareChart("square-chart");
 
   // drawD3Chart("d3-chart");  
 </script> 
