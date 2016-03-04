@@ -1,5 +1,5 @@
 <html>
-<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>    
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>    
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
 <script src="jquery-1.12.0.min.js"></script>
 <script src="dataHelper.js"></script>        
@@ -43,10 +43,11 @@ text {
 
 </style>
 <body>
-    <canvas id="canvas-chart" width="500" height="100"></canvas><hr>
-    <pre id="output"></pre>
+    <canvas id="canvas-chart" width="1000" height="150"></canvas><hr>
     <button onclick="addPoint();">Add point</button>
-    <!-- <div id="d3-chart"></div> -->
+    <hr>
+    <pre id="output"></pre>
+    <div id="d3-chart" width="1000" height="150"></div>
     <hr>
     <canvas id="square-chart" width="600" height="600"></canvas>
 </body>
@@ -57,6 +58,6 @@ text {
     }
     var q = drawSquareChart("square-chart");
 
-  // drawD3Chart("d3-chart");  
+   drawD3Chart("d3-chart");  
 </script> 
 </html>
