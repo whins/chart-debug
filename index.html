@@ -1,5 +1,6 @@
-<html>
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>    
+<html>    
+<head>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>    
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
 <script src="jquery-1.12.0.min.js"></script>
 <script src="dataHelper.js"></script>        
@@ -42,6 +43,9 @@ text {
 }*/
 
 </style>
+    
+</head>
+   
 <body>
     <canvas id="canvas-chart" width="1000" height="150"></canvas><hr>
     <button onclick="addPoint();">Add point</button>
@@ -51,7 +55,7 @@ text {
     <hr>
     <canvas id="square-chart" width="600" height="600"></canvas>
 </body>
-<script>
+    <script>
     var s = drawCanvasChart("canvas-chart");
     function addPoint () {
         s.addPoint();
@@ -59,5 +63,5 @@ text {
     var q = drawSquareChart("square-chart");
 
    drawD3Chart("d3-chart");  
-</script> 
+</script>  
 </html>
